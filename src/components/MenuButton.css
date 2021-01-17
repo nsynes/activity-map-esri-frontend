@@ -1,0 +1,32 @@
+.menu-button {
+    display: inline-block;
+    outline: none;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: .25em;
+    margin: .25em .25em;
+    font-weight: bold;
+    background-color: rgba(255,255,255,1);
+    transition-duration: 0.25s;
+    box-shadow: 1px 2px rgba(0,0,0,.2);
+} 
+.menu-button:hover {
+    cursor: pointer;
+}
+.menu-button:active, .menu-button.highlighted {
+    background-color: rgb(210,210,210);
+    box-shadow: 1px 1px rgba(0,0,0,.5);
+    transform: translateY(1px);
+}
+.menu-button-container {
+    position: absolute;
+    z-index: 3;
+    display: inline-flex;
+    flex-flow: row;
+}
+.menu-button-container.left {
+    left: 0;
+}
+.menu-button-container.right {
+    right: 0;
+}
