@@ -115,6 +115,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
         view.ui.move('compass', 'top-right');
 
         view.when(() => {
+          //view.extent = geoJSONLayer.fullExtent;
           setView(view);
         });
 
