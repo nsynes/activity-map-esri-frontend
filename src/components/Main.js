@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Map from "./Map";
 import MenuButton from "./MenuButton";
 import Panel from "./Panel";
 import TextField from '@material-ui/core/TextField';
 import Slider from "./Slider";
+import useQueryString from "../utils/useQueryString";
+
 
 function Main() {
+
+  const [filterText, setFilterText] = useQueryString("s");
 
   const [distanceSliderLimits, setDistanceSliderLimits] = useState([0,200000]);
 
   const [menuPanelVisibility, setMenuPanelVisibility] = useState(true);
 
-  const [filterText, setFilterText] = useState('');
-
   const [zoomTo, setZoomTo] = useState(false);
+
+  useEffect(() => {
+    if ( filterText ) {
+      setZoomTo(true)
+    }
+  }, [])
 
   function handleMenuButtonClick() {
     setMenuPanelVisibility(!menuPanelVisibility);
@@ -30,6 +38,7 @@ function Main() {
         onClick={handleMenuButtonClick} />
         <Panel
           visible={menuPanelVisibility} >
+          <br></br>
           <div style={{fontWeight: 'bold'}}>Activity filtering</div>
           <br></br>
           <TextField
@@ -44,12 +53,12 @@ function Main() {
             distanceSliderLimits={distanceSliderLimits}
             handleDistanceSliderChange={handleDistanceSliderChange} />}
         </Panel>
-      <Map
-        filterText={filterText}
-        distanceSliderLimits={distanceSliderLimits}
-        zoomTo={zoomTo}
-        setZoomTo={setZoomTo}
-        handleDistanceSliderChange={handleDistanceSliderChange} />
+        <Map
+          filterText={filterText}
+          distanceSliderLimits={distanceSliderLimits}
+          zoomTo={zoomTo}
+          setZoomTo={setZoomTo}
+          handleDistanceSliderChange={handleDistanceSliderChange} />
     </div>
   );
 }

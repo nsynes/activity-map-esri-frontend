@@ -34,8 +34,31 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
             fields: [
               { "name": "name", "type": "string" },
               { "name": "type", "type": "string" },
-              { "name": "distance", "type": "double" }
+              { "name": "distance", "type": "double" },
+              { "name": "start_date", "type": "string" }
             ],
+            outFields: ["*"],
+            popupTemplate: {
+              title: "Activity Details",
+              content: [{//"<b>Activity</b>: {type}<br/><b>Name</b>: {name}<br/><b>Distance</b>: {distance}<br/>"
+                type: "fields",
+                fieldInfos: [{
+                  fieldName: "name",
+                  label: "Activity Name",
+                }, {
+                  fieldName: "expression/distance",
+                  format: {
+                    digitSeparator: true,
+                    places: 1
+                  }
+                }]
+              }],
+              expressionInfos: [{
+                name: "distance",
+                title: "Distance (km)",
+                expression: "$feature.distance/1000"
+              }]
+            },
             renderer: {
               type: "unique-value",
               field: "type",
@@ -83,6 +106,9 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
 
         map.add(geoJSONLayer);
 
+        geoJSONLayer.on("edits", function(event) {
+          console.log('edits')
+        })
 
         view.ui.move('zoom', 'top-right');
         view.ui.move('navigation-toggle', 'top-right');
@@ -93,9 +119,22 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
         });
 
         view.whenLayerView(geoJSONLayer).then(function (layerview) {
-          handleDistanceSliderChange(0,200000)  
-          //geoJSONLayer.definitionExpression = `LOWER(name) LIKE '%h%a%d%r%i%a%n%s%' AND LOWER(name) LIKE '%w%a%l%l%'` 
+          handleDistanceSliderChange(0,200000);
         });
+
+        view.on("click", function (evt) {  
+          // Search for symbols on click's position
+          view.hitTest(evt.screenPoint)
+            .then(function(response){
+              // Retrieve the first symbol
+              var graphic = response.results && response.results[0] && response.results[0].graphic ? response.results[0].graphic : null;
+              if (graphic) {
+                // We now have access to its attributes
+                console.log(graphic.attributes);
+              }
+            });
+        }); 
+
       }
     );
 
@@ -109,16 +148,23 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
       view.map.layers.items[0].queryExtent().then(function(results) {
         view.goTo(results.extent);
       })
+      setZoomTo(false)
     }
-    setZoomTo(false)
   }, [zoomTo, view])
 
   useEffect(() => {
     if ( view && view.map && view.map.layers && view.map.layers.items[0]) {
-      const sqlExpression = 
+      var sqlExpression;
+      if ( filterText ) {
+        sqlExpression = 
         `distance >= ${distanceSliderLimits[0]} AND
         distance <= ${distanceSliderLimits[1]} AND
         LOWER(name) LIKE '%${[...filterText].join('%')}%'`
+      } else {
+        sqlExpression = 
+        `distance >= ${distanceSliderLimits[0]} AND
+        distance <= ${distanceSliderLimits[1]}`
+      }
       view.map.layers.items[0].definitionExpression = sqlExpression
     }
   }, [distanceSliderLimits, filterText, view])
