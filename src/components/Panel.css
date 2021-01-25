@@ -34,7 +34,7 @@
         border-radius: 5px;
     }
     .panel.left.visible {
-        min-width: 500px;
+        min-width: 300px;
     }
     .panel.right.visible {
         min-width: 300px;
