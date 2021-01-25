@@ -32,6 +32,7 @@ export default function Slider({ handleDistanceSliderChange }) {
             });
 
         })
+    // eslint-disable-next-line 
     }, [])
 
     return (

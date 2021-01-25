@@ -142,6 +142,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
     return () => {
       setView(null);
     };
+  // eslint-disable-next-line 
   }, []);
 
   useEffect(() => {
@@ -151,6 +152,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
       })
       setZoomTo(false)
     }
+  // eslint-disable-next-line 
   }, [zoomTo, view])
 
   useEffect(() => {

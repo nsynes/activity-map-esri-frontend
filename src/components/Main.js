@@ -22,6 +22,7 @@ function Main() {
     if ( filterText ) {
       setZoomTo(true)
     }
+  // eslint-disable-next-line 
   }, [])
 
   function handleMenuButtonClick() {
