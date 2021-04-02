@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { loadEsriModules } from "../utils/loader";
 
-export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimits, handleDistanceSliderChange }) {
+export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimits, basemap, handleDistanceSliderChange }) {
   const mapRef = useRef();
   const [view, setView] = useState(null);
 
@@ -14,7 +14,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
         }
         
         const map = new Map({
-          basemap: "hybrid",
+          basemap: basemap,
           ground: "world-elevation"
         });
 
@@ -144,6 +144,15 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
     };
   // eslint-disable-next-line 
   }, []);
+
+  
+  useEffect(() => {
+    if ( view && view.map ) {
+      view.map.basemap = basemap
+    }
+    
+  // eslint-disable-next-line 
+  }, [basemap, view])
 
   useEffect(() => {
     if ( zoomTo && view && view.map && view.map.layers && view.map.layers.items[0]) {

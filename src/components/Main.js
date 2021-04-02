@@ -4,6 +4,8 @@ import Map from "./Map";
 import MenuButton from "./MenuButton";
 import Panel from "./Panel";
 import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Slider from "./Slider";
 import useQueryString from "../utils/useQueryString";
 
@@ -17,6 +19,8 @@ function Main() {
   const [menuPanelVisibility, setMenuPanelVisibility] = useState(true);
 
   const [zoomTo, setZoomTo] = useState(false);
+
+  const [basemap, setBasemap] = useState('hybrid');
 
   useEffect(() => {
     if ( filterText ) {
@@ -32,6 +36,13 @@ function Main() {
   function handleDistanceSliderChange(min, max) {
     setDistanceSliderLimits([min, max])
   }
+
+  function handleBasemapChange(event) {
+    setBasemap(event.target.value)
+  }
+
+  const basemapOptions = ["topo","streets","satellite","hybrid","dark-gray","gray","national-geographic","oceans","osm","terrain","dark-gray-vector","gray-vector","streets-vector","streets-night-vector","streets-navigation-vector","topo-vector","streets-relief-vector"]
+  const basemapMenuItems = basemapOptions.map(bm => <MenuItem value={bm} key={bm}>{bm}</MenuItem>)
 
   return (
     <div className="App">
@@ -53,12 +64,19 @@ function Main() {
           {false && <Slider
             distanceSliderLimits={distanceSliderLimits}
             handleDistanceSliderChange={handleDistanceSliderChange} />}
+          <br></br>
+          <br></br>
+          Basemap:&nbsp;
+          <Select value={basemap} onChange={handleBasemapChange}>
+            {basemapMenuItems}
+          </Select>
         </Panel>
         <Map
           filterText={filterText}
           distanceSliderLimits={distanceSliderLimits}
           zoomTo={zoomTo}
           setZoomTo={setZoomTo}
+          basemap={basemap}
           handleDistanceSliderChange={handleDistanceSliderChange} />
     </div>
   );
