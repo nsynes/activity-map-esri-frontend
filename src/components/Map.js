@@ -14,7 +14,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
         }
         
         const map = new Map({
-          basemap: "satellite",
+          basemap: "hybrid",
           ground: "world-elevation"
         });
 
