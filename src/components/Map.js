@@ -171,7 +171,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
         sqlExpression = 
         `distance >= ${distanceSliderLimits[0]} AND
         distance <= ${distanceSliderLimits[1]} AND
-        LOWER(name) LIKE '%${[...filterText].join('%')}%'`
+        LOWER(name) LIKE '%${[...filterText.toLowerCase()].join('%')}%'`
       } else {
         sqlExpression = 
         `distance >= ${distanceSliderLimits[0]} AND
