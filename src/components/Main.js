@@ -20,7 +20,7 @@ function Main() {
 
   const [zoomTo, setZoomTo] = useState(false);
 
-  const [basemap, setBasemap] = useState('hybrid');
+  const [basemap, setBasemap] = useQueryString("basemap", "hybrid");
 
   useEffect(() => {
     if ( filterText ) {
