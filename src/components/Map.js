@@ -65,7 +65,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
               defaultSymbol: {
                 type: "simple-line",
                 color: "#000000",
-                width: 3,
+                width: 2,
                 style: "solid"
               },
               defaultLabel: "Other activity",
@@ -75,7 +75,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
                   symbol: {
                     type: "simple-line",
                     color: "#ff0000",
-                    width: 3,
+                    width: 2,
                     style: "solid"
                   },
                   label: "Hike"
@@ -85,7 +85,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
                   symbol: {
                     type: "simple-line",
                     color: "#ffa500",
-                    width: 3,
+                    width: 2,
                     style: "solid"
                   },
                   label: "Ride"
@@ -95,7 +95,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
                   symbol: {
                     type: "simple-line",
                     color: "#0000ff",
-                    width: 3,
+                    width: 2,
                     style: "solid"
                   },
                   label: "Run"
@@ -157,7 +157,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
   useEffect(() => {
     if ( zoomTo && view && view.map && view.map.layers && view.map.layers.items[0]) {
       view.map.layers.items[0].queryExtent().then(function(results) {
-        view.goTo(results.extent);
+        view.goTo(results.extent, {speedFactor: 100});
       })
       setZoomTo(false)
     }
