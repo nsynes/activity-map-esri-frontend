@@ -41,7 +41,7 @@ function Main() {
     setBasemap(event.target.value)
   }
 
-  const basemapOptions = ["topo","streets","satellite","hybrid","dark-gray","gray","national-geographic","oceans","osm","terrain","dark-gray-vector","gray-vector","streets-vector","streets-night-vector","streets-navigation-vector","topo-vector","streets-relief-vector"]
+  const basemapOptions = ["topo","streets","satellite","hybrid","national-geographic","osm"]
   const basemapMenuItems = basemapOptions.map(bm => <MenuItem value={bm} key={bm}>{bm}</MenuItem>)
 
   return (
