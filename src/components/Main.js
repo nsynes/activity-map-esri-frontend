@@ -66,7 +66,7 @@ function Main() {
             handleDistanceSliderChange={handleDistanceSliderChange} />}
           <br></br>
           <br></br>
-          Basemap:&nbsp;
+          <b>Basemap</b>:&nbsp;&nbsp;&nbsp;
           <Select value={basemap} onChange={handleBasemapChange}>
             {basemapMenuItems}
           </Select>
