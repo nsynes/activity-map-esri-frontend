@@ -46,10 +46,18 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
                   fieldName: "name",
                   label: "Activity Name",
                 }, {
+                  fieldName: "type",
+                  label: "Activity Type",
+                }, {
                   fieldName: "expression/distance",
                   format: {
                     digitSeparator: true,
                     places: 1
+                  }
+                }, {
+                  fieldName: "start_date",
+                  format: {
+                    dateFormat: 'short-date-short-time'
                   }
                 }]
               }],
