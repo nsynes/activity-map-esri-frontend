@@ -50,26 +50,30 @@ function Main() {
         onClick={handleMenuButtonClick} />
         <Panel
           visible={menuPanelVisibility} >
-          <br></br>
-          <div style={{fontWeight: 'bold'}}>Activity filtering</div>
-          <br></br>
-          <TextField
-            placeholder='keywords'
-            name="name-filter"
-            value={filterText}
-            onChange={(e) => setFilterText(e.target.value)} />
-          <br></br>
-          <br></br>
-          <button onClick={() => setZoomTo(true)}>Zoom to</button>
-          {false && <Slider
-            distanceSliderLimits={distanceSliderLimits}
-            handleDistanceSliderChange={handleDistanceSliderChange} />}
-          <br></br>
-          <br></br>
-          <b>Basemap</b>:&nbsp;&nbsp;&nbsp;
-          <Select value={basemap} onChange={handleBasemapChange}>
-            {basemapMenuItems}
-          </Select>
+          {menuPanelVisibility &&
+            <div>
+              <br></br>
+              <div style={{fontWeight: 'bold'}}>Activity filtering</div>
+              <br></br>
+              <TextField
+                placeholder='keywords'
+                name="name-filter"
+                value={filterText}
+                onChange={(e) => setFilterText(e.target.value)} />
+              <br></br>
+              <br></br>
+              <button onClick={() => setZoomTo(true)}>Zoom to</button>
+              {false && <Slider
+                distanceSliderLimits={distanceSliderLimits}
+                handleDistanceSliderChange={handleDistanceSliderChange} />}
+              <br></br>
+              <br></br>
+              <b>Basemap</b>:&nbsp;&nbsp;&nbsp;
+              <Select value={basemap} onChange={handleBasemapChange}>
+                {basemapMenuItems}
+              </Select>
+            </div>
+          }
         </Panel>
         <Map
           filterText={filterText}
