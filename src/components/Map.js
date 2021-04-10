@@ -35,7 +35,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
               { "name": "name", "type": "string" },
               { "name": "type", "type": "string" },
               { "name": "distance", "type": "double" },
-              { "name": "start_date", "type": "string" }
+              { "name": "timestamp", "type": "date" }
             ],
             outFields: ["*"],
             popupTemplate: {
@@ -43,6 +43,12 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
               content: [{//"<b>Activity</b>: {type}<br/><b>Name</b>: {name}<br/><b>Distance</b>: {distance}<br/>"
                 type: "fields",
                 fieldInfos: [{
+                  fieldName: "timestamp",
+                  label: "Date",
+                  format: {
+                    dateFormat: 'long-date'
+                  }
+                }, {
                   fieldName: "name",
                   label: "Activity Name",
                 }, {
@@ -53,11 +59,6 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
                   format: {
                     digitSeparator: true,
                     places: 1
-                  }
-                }, {
-                  fieldName: "start_date",
-                  format: {
-                    dateFormat: 'short-date-short-time'
                   }
                 }]
               }],
