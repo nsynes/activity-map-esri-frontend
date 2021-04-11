@@ -6,8 +6,8 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
   const [view, setView] = useState(null);
 
   useEffect(() => {
-    loadEsriModules(["esri/Map", "esri/views/MapView", "esri/views/SceneView", "esri/layers/GeoJSONLayer"])
-    .then(([Map, MapView, SceneView, GeoJSONLayer]) => {
+    loadEsriModules(["esri/Map", "esri/views/MapView", "esri/views/SceneView", "esri/layers/GeoJSONLayer","esri/widgets/Locate"])
+    .then(([Map, MapView, SceneView, GeoJSONLayer, Locate]) => {
         if (!mapRef) {
           // component or app was likely destroyed
           return;
@@ -26,6 +26,10 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
               heading: 0,
               tilt: 30
             }
+        });
+
+        var locateBtn = new Locate({
+          view: view
         });
 
         const geoJSONLayer = new GeoJSONLayer({
@@ -122,6 +126,10 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
         view.ui.move('zoom', 'top-right');
         view.ui.move('navigation-toggle', 'top-right');
         view.ui.move('compass', 'top-right');
+        // Add the locate widget to the top left corner of the view
+        view.ui.add(locateBtn, {
+          position: "top-right"
+        });
 
         view.when(() => {
           //view.extent = geoJSONLayer.fullExtent;
@@ -166,6 +174,7 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
   useEffect(() => {
     if ( zoomTo && view && view.map && view.map.layers && view.map.layers.items[0]) {
       view.map.layers.items[0].queryExtent().then(function(results) {
+        console.log('zoom', results)
         view.goTo(results.extent, {speedFactor: 100});
       })
       setZoomTo(false)

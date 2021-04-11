@@ -53,7 +53,11 @@ function Main() {
           {menuPanelVisibility &&
             <div>
               <br></br>
-              <div style={{fontWeight: 'bold'}}>Activity filtering</div>
+              <b>Basemap</b>:&nbsp;&nbsp;&nbsp;
+              <Select value={basemap} onChange={handleBasemapChange}>
+                {basemapMenuItems}
+              </Select>
+              <br></br>
               <br></br>
               <TextField
                 placeholder='keywords'
@@ -62,16 +66,13 @@ function Main() {
                 onChange={(e) => setFilterText(e.target.value)} />
               <br></br>
               <br></br>
-              <button onClick={() => setZoomTo(true)}>Zoom to</button>
-              {false && <Slider
+              <br></br>
+              <Slider
                 distanceSliderLimits={distanceSliderLimits}
-                handleDistanceSliderChange={handleDistanceSliderChange} />}
+                handleDistanceSliderChange={handleDistanceSliderChange} />
               <br></br>
               <br></br>
-              <b>Basemap</b>:&nbsp;&nbsp;&nbsp;
-              <Select value={basemap} onChange={handleBasemapChange}>
-                {basemapMenuItems}
-              </Select>
+              <button onClick={() => setZoomTo(true)}>Zoom to</button>
             </div>
           }
         </Panel>
