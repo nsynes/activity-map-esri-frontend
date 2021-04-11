@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { loadEsriModules } from "../utils/loader";
 
-export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimits, basemap, handleDistanceSliderChange }) {
+export default function Map({ filterText, distanceSliderLimits, activityTypes, zoomTo, setZoomTo, basemap, handleDistanceSliderChange }) {
   const mapRef = useRef();
   const [view, setView] = useState(null);
 
@@ -189,15 +189,18 @@ export default function Map({ filterText, zoomTo, setZoomTo, distanceSliderLimit
         sqlExpression = 
         `distance >= ${distanceSliderLimits[0]} AND
         distance <= ${distanceSliderLimits[1]} AND
+        ${activityTypes.map((x) => `type LIKE '${x}'`).join(' OR ')}
         LOWER(name) LIKE '%${[...filterText.toLowerCase()].join('%')}%'`
       } else {
         sqlExpression = 
         `distance >= ${distanceSliderLimits[0]} AND
-        distance <= ${distanceSliderLimits[1]}`
+        distance <= ${distanceSliderLimits[1]} AND
+        ${activityTypes.map((x) => `type LIKE '${x}'`).join(' OR ')}`
       }
+      console.log(sqlExpression)
       view.map.layers.items[0].definitionExpression = sqlExpression
     }
-  }, [distanceSliderLimits, filterText, view])
+  }, [distanceSliderLimits, filterText, activityTypes, view])
 
   return <div className="map" ref={mapRef} />;
 }
